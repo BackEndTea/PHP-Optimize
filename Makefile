@@ -37,7 +37,7 @@ test-infection: $(INFECTION)
 analyze: validate phpstan cs-check
 
 phpstan: vendor $(PHPSTAN)
-	$(PHPSTAN) analyse src tests --level=2 --no-interaction
+	$(PHPSTAN) analyse src tests --level=max --no-interaction -c phpstan.neon
 
 cs-fix: vendor $(PHP-CS-FIXER)
 	$(PHP-CS-FIXER) fix -v --diff

@@ -1,7 +1,7 @@
 {
-    "name": "backendtea/php-optimize",
+    "name": "backendtea/php-optimizer",
     "type": "library",
-    "description": "Optimize PHP code by inlining certain functions and variables where possible",
+    "description": "Optimize PHP code for phars",
     "license": "MIT",
     "authors": [
         {

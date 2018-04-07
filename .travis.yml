@@ -8,7 +8,7 @@ matrix:
 
 env:
   global:
-    INFECTION_FLAGS='--threads=4 --coverage=coverage --log-vebosity=3'
+    INFECTION_FLAGS='--threads=4 --coverage=coverage --log-vebosity=3 --min-msi=90'
 
 cache:
   directories:
