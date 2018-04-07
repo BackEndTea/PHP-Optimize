@@ -1,0 +1,33 @@
+{
+    "name": "backendtea/php-optimize",
+    "type": "library",
+    "description": "Optimize PHP code by inlining certain functions and variables where possible",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gert de Pagter",
+            "email": "gertp93@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "nikic/php-parser": "^4.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^7.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpOptimizer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpOptimizer\\Test\\": "tests/"
+        }
+    }
+}

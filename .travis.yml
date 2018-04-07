@@ -1,0 +1,29 @@
+language: php
+
+sudo: false
+
+matrix:
+  - php: 7.1
+  - php: 7.2
+
+env:
+  global:
+    INFECTION_FLAGS='--threads=4 --coverage=coverage --log-vebosity=3'
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
+  - composer selfupdate
+  - source .travis/xdebug.sh
+  - xdebug-disable
+
+script:
+  - make analyze --keep-going
+  - xdebug-enable
+  - vendor/bin/phpunit --coverage-clover=clover.xml --coverage-xml=coverage/coverage-xml --log-junit=coverage/phpunit.junit.xml
+  - make test-infection
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

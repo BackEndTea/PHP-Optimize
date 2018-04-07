@@ -1,0 +1,18 @@
+#composer items
+/vendor/
+composer.lock
+composer.phar
+
+#IDE
+.idea/
+
+#Phars
+infection.phar
+infection.phar.pubkey
+phpstan.phar
+php-cs-fixer-v2.phar
+
+#Local stuff
+.php_cs.cache
+infection-log.txt
+/coverage/
