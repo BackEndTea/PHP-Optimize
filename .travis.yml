@@ -3,8 +3,9 @@ language: php
 sudo: false
 
 matrix:
-  - php: 7.1
-  - php: 7.2
+  include:
+    - php: 7.1
+    - php: 7.2
 
 env:
   global:
@@ -18,6 +19,9 @@ before_install:
   - composer selfupdate
   - source .travis/xdebug.sh
   - xdebug-disable
+
+install:
+  - composer install
 
 script:
   - make analyze --keep-going
