@@ -1,5 +1,8 @@
 # PHP Optimize
 
+[![codecov](https://codecov.io/gh/BackEndTea/PHP-Optimize/branch/master/graph/badge.svg)](https://codecov.io/gh/BackEndTea/PHP-Optimize)
+[![Build Status](https://travis-ci.org/BackEndTea/PHP-Optimize.svg?branch=master)](https://travis-ci.org/BackEndTea/PHP-Optimize)
+
 A package for micro optimizations within your PHP-code, intended to use for phars.
 
 ## The idea
