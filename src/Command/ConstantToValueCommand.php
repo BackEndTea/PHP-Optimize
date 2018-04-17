@@ -26,8 +26,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ConstantToValue
- * @package PhpOptimizer\Command
+ * Class ConstantToValue.
  *
  * @author Loek van der Linde <lind0077@hz.nl>
  */
@@ -36,7 +35,7 @@ class ConstantToValueCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('php-optimize:constant:tovalue')
@@ -57,17 +56,17 @@ class ConstantToValueCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $directoryToScan = getcwd() . '/' . $input->getArgument('source_folder');
-        $directoryToBuild = getcwd() . '/' . $input->getArgument('build_folder');
+        $directoryToScan = \getcwd() . '/' . $input->getArgument('source_folder');
+        $directoryToBuild = \getcwd() . '/' . $input->getArgument('build_folder');
 
-        $parser = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
+        $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
         $traverser = new NodeTraverser();
 
         $constantsVisitor = new ConstantIndexVisitor();
 
-        $traverser->addVisitor(new NameResolver);
+        $traverser->addVisitor(new NameResolver());
         $traverser->addVisitor($constantsVisitor);
 
         $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directoryToScan));
@@ -75,10 +74,14 @@ class ConstantToValueCommand extends Command
 
         foreach ($files as $file) {
             try {
-                $code = file_get_contents($file->getPathName());
+                $code = \file_get_contents($file->getPathName());
                 $stmts = $parser->parse($code);
-                $traverser->traverse($stmts);
 
+                if (empty($stmts)) {
+                    continue;
+                }
+
+                $traverser->traverse($stmts);
             } catch (Error $e) {
                 echo 'Parse Error: ', $e->getMessage();
             }
@@ -95,18 +98,23 @@ class ConstantToValueCommand extends Command
 
         foreach ($files as $file) {
             try {
-                $code = file_get_contents($file->getPathName());
+                $code = \file_get_contents($file->getPathName());
                 $stmts = $parser->parse($code);
+
+                if (empty($stmts)) {
+                    continue;
+                }
+
                 $stmts = $traverser->traverse($stmts);
 
                 $code = $prettyPrinter->prettyPrintFile($stmts);
 
-                file_put_contents(
-                    substr_replace(
+                \file_put_contents(
+                    \substr_replace(
                         $file->getPathname(),
                         $directoryToBuild,
                         0,
-                        strlen($directoryToScan)
+                        \strlen($directoryToScan)
                     ),
                     $code
                 );

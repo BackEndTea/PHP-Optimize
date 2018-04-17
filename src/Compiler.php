@@ -22,21 +22,21 @@ use Symfony\Component\Finder\Finder;
  */
 class Compiler
 {
-
     /**
-     * @var \DateTime
+     * @var string
      */
     private $versionDate;
 
-    public function compile(string $filename = 'php-optimize.phar')
+    public function compile(string $filename = 'php-optimize.phar'): void
     {
         // TODO figure out what php compatibility should be, now it's 7+ due to typehint
 
-        if (file_exists($filename)) {
-            unlink($filename);
+        if (\file_exists($filename)) {
+            \unlink($filename);
         }
 
-        $this->versionDate = new \DateTime('now', new \DateTimeZone('UTC'));
+        $date = new \DateTime('now', new \DateTimeZone('UTC'));
+        $this->versionDate = $date->format('c');
 
         $phar = new \Phar($filename, 0, 'php-optimize.phar');
         $phar->setSignatureAlgorithm(\Phar::SHA1);
@@ -79,7 +79,7 @@ class Compiler
         $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_files.php'));
         $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_real.php'));
         $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/autoload_static.php'));
-        if (file_exists(__DIR__ . '/../vendor/composer/include_paths.php')) {
+        if (\file_exists(__DIR__ . '/../vendor/composer/include_paths.php')) {
             $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/include_paths.php'));
         }
         $this->addFile($phar, new \SplFileInfo(__DIR__ . '/../vendor/composer/ClassLoader.php'));
@@ -102,14 +102,14 @@ class Compiler
     /**
      * Adds a file to the PHAR passed. Can also remove whitespace from passed source files.
      *
-     * @param \Phar $phar
+     * @param \Phar        $phar
      * @param \SplFileInfo $file
-     * @param bool $strip
+     * @param bool         $strip
      */
-    private function addFile($phar, $file, $strip = true)
+    private function addFile($phar, $file, $strip = true): void
     {
         $path = $this->getRelativeFilePath($file);
-        $content = file_get_contents($file->getPathname());
+        $content = \file_get_contents($file->getPathname());
 
         if ($strip) {
             $content = $this->stripWhitespace($content);
@@ -119,61 +119,65 @@ class Compiler
     }
 
     /**
-     * Get file path relative to cwd
+     * Get file path relative to cwd.
      *
      * @param \SplFileInfo $file
+     *
      * @return string
      */
     private function getRelativeFilePath($file)
     {
         $realPath = $file->getRealPath();
-        $pathPrefix = dirname(dirname(__DIR__)).DIRECTORY_SEPARATOR;
-        $pos = strpos($realPath, $pathPrefix);
-        $relativePath = ($pos !== false) ? substr_replace($realPath, '', $pos, strlen($pathPrefix)) : $realPath;
-        return strtr($relativePath, '\\', '/');
+        $pathPrefix = \dirname(\dirname(__DIR__)) . DIRECTORY_SEPARATOR;
+        $pos = \strpos($realPath, $pathPrefix);
+        $relativePath = ($pos !== false) ? \substr_replace($realPath, '', $pos, \strlen($pathPrefix)) : $realPath;
+
+        return \strtr($relativePath, '\\', '/');
     }
 
     /**
-     * Removes whitespace from PHP source, while preserving line numbers
+     * Removes whitespace from PHP source, while preserving line numbers.
      *
      * @param string $source
+     *
      * @return string
      */
     private function stripWhitespace($source)
     {
-        if (!function_exists('token_get_all')) {
+        if (! \function_exists('token_get_all')) {
             return $source;
         }
         $output = '';
-        foreach (token_get_all($source) as $token) {
-            if (is_string($token)) {
+        foreach (\token_get_all($source) as $token) {
+            if (\is_string($token)) {
                 $output .= $token;
-            } elseif (in_array($token[0], array(T_COMMENT, T_DOC_COMMENT))) {
-                $output .= str_repeat("\n", substr_count($token[1], "\n"));
+            } elseif (\in_array($token[0], array(T_COMMENT, T_DOC_COMMENT))) {
+                $output .= \str_repeat("\n", \substr_count($token[1], "\n"));
             } elseif (T_WHITESPACE === $token[0]) {
                 // reduce wide spaces
-                $whitespace = preg_replace('{[ \t]+}', ' ', $token[1]);
+                $whitespace = \preg_replace('{[ \t]+}', ' ', $token[1]);
                 // normalize newlines to \n
-                $whitespace = preg_replace('{(?:\r\n|\r|\n)}', "\n", $whitespace);
+                $whitespace = \preg_replace('{(?:\r\n|\r|\n)}', "\n", $whitespace);
                 // trim leading spaces
-                $whitespace = preg_replace('{\n +}', "\n", $whitespace);
+                $whitespace = \preg_replace('{\n +}', "\n", $whitespace);
                 $output .= $whitespace;
             } else {
                 $output .= $token[1];
             }
         }
+
         return $output;
     }
 
     /**
-     * Adds the php-optimizer executable from the bin/ folder
+     * Adds the php-optimizer executable from the bin/ folder.
      *
      * @param \Phar $phar
      */
-    private function addBinExecutable($phar)
+    private function addBinExecutable($phar): void
     {
-        $content = file_get_contents(__DIR__ . '/../bin/php-optimize');
-        $content = preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
+        $content = \file_get_contents(__DIR__ . '/../bin/php-optimize');
+        $content = \preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
         $phar->addFromString('bin/php-optimize', $content);
     }
 
@@ -187,6 +191,7 @@ class Compiler
         $stub = <<<'EOF'
 Phar::mapPhar();
 EOF;
+
         return $stub . <<<'EOF'
 require 'phar://php-optimize.phar/bin/php-optimize';
 __HALT_COMPILER();

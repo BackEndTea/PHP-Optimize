@@ -19,8 +19,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class RunPhpOptimizer
- * @package PhpOptimizer\Command
+ * Class RunPhpOptimizer.
  *
  * @author Loek van der Linde <lind0077@hz.nl>
  */
@@ -29,7 +28,7 @@ class RunPhpOptimizerCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('php-optimize:run')
@@ -50,14 +49,14 @@ class RunPhpOptimizerCommand extends Command
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         // TODO Now we hard-code commands. Auto discovery would be nice
         $this->runConstantToValueCommand($input, $output);
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
      */
     protected function runConstantToValueCommand(InputInterface $input, OutputInterface $output): void
@@ -67,7 +66,7 @@ class RunPhpOptimizerCommand extends Command
         $arguments = [
             'command' => 'php-optimze:constant:tovalue',
             'source_folder' => $input->getArgument('source_folder'),
-            'build_folder' => $input->getArgument('build_folder')
+            'build_folder' => $input->getArgument('build_folder'),
         ];
 
         $constToValueInput = new ArrayInput($arguments);
