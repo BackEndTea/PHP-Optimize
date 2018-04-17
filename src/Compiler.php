@@ -1,18 +1,31 @@
 <?php
 
+/**
+ * This file is part of the backendtea/php-optimizer package.
+ * Copyright (c) 2018 Gert de Pagter
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
 namespace PhpOptimizer;
 
 use Seld\PharUtils\Timestamps;
 use Symfony\Component\Finder\Finder;
 
 /**
- * Compiler class creates a PHAR file from this package
+ * Compiler class creates a PHAR file from this package. Heavily inspired by Composer's Compiler class.
  *
- * Heavily inspired by Composer's Compiler class.
+ * @author Loek van der Linde <lind0077@hz.nl>
  */
 class Compiler
 {
 
+    /**
+     * @var \DateTime
+     */
     private $versionDate;
 
     public function compile(string $filename = 'build/php-optimize.phar')
@@ -87,6 +100,8 @@ class Compiler
     }
 
     /**
+     * Adds a file to the PHAR passed. Can also remove whitespace from passed source files.
+     *
      * @param \Phar $phar
      * @param \SplFileInfo $file
      * @param bool $strip
@@ -104,6 +119,8 @@ class Compiler
     }
 
     /**
+     * Get file path relative to cwd
+     *
      * @param \SplFileInfo $file
      * @return string
      */
@@ -149,6 +166,8 @@ class Compiler
     }
 
     /**
+     * Adds the php-optimizer executable from the bin/ folder
+     *
      * @param \Phar $phar
      */
     private function addBinExecutable($phar)
@@ -158,6 +177,11 @@ class Compiler
         $phar->addFromString('bin/php-optimizer', $content);
     }
 
+    /**
+     * PHP forces every PHAR to end with a stub.
+     *
+     * @return string
+     */
     private function getStub()
     {
         $stub = <<<'EOF'
