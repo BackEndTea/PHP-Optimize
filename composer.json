@@ -10,7 +10,7 @@
         }
     ],
     "bin": [
-        "php-optimize"
+        "bin/php-optimize"
     ],
     "require": {
         "php": "^7.1",

@@ -50,7 +50,7 @@ class Compiler
             ->ignoreVCS(true)
             ->name('*.php')
             ->notName('Compiler.php')
-            ->in(__DIR__ . '/')
+            ->in(__DIR__)
         ;
 
         foreach ($finder as $file) {
@@ -66,6 +66,9 @@ class Compiler
             ->exclude('tests')
             ->exclude('docs')
             ->in(__DIR__ . '/../vendor/nikic/php-parser/')
+            ->in(__DIR__ . '/../vendor/myclabs/deep-copy/')
+            ->in(__DIR__ . '/../vendor/symfony/polyfill-mbstring/')
+            ->in(__DIR__ . '/../vendor/symfony/console')
         ;
 
         foreach ($finder as $file) {
@@ -128,7 +131,7 @@ class Compiler
     private function getRelativeFilePath($file)
     {
         $realPath = $file->getRealPath();
-        $pathPrefix = \dirname(\dirname(__DIR__)) . DIRECTORY_SEPARATOR;
+        $pathPrefix = (\dirname(__DIR__)) . DIRECTORY_SEPARATOR;
         $pos = \strpos($realPath, $pathPrefix);
         $relativePath = ($pos !== false) ? \substr_replace($realPath, '', $pos, \strlen($pathPrefix)) : $realPath;
 
@@ -189,12 +192,12 @@ class Compiler
     private function getStub()
     {
         $stub = <<<'EOF'
-Phar::mapPhar();
-EOF;
-
-        return $stub . <<<'EOF'
+#!/usr/bin/env php
+<?php
+Phar::mapPhar('php-optimize.phar');
 require 'phar://php-optimize.phar/bin/php-optimize';
-__HALT_COMPILER();
+__HALT_COMPILER(); ?>
 EOF;
+        return $stub;
     }
 }
