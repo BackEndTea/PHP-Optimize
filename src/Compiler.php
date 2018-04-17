@@ -28,7 +28,7 @@ class Compiler
      */
     private $versionDate;
 
-    public function compile(string $filename = 'build/php-optimize.phar')
+    public function compile(string $filename = 'php-optimize.phar')
     {
         // TODO figure out what php compatibility should be, now it's 7+ due to typehint
 
@@ -109,7 +109,7 @@ class Compiler
     private function addFile($phar, $file, $strip = true)
     {
         $path = $this->getRelativeFilePath($file);
-        $content = file_get_contents($file);
+        $content = file_get_contents($file->getPathname());
 
         if ($strip) {
             $content = $this->stripWhitespace($content);
@@ -172,9 +172,9 @@ class Compiler
      */
     private function addBinExecutable($phar)
     {
-        $content = file_get_contents(__DIR__ . '/../bin/php-optimizer');
+        $content = file_get_contents(__DIR__ . '/../bin/php-optimize');
         $content = preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
-        $phar->addFromString('bin/php-optimizer', $content);
+        $phar->addFromString('bin/php-optimize', $content);
     }
 
     /**
