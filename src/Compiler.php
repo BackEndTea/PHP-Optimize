@@ -198,6 +198,7 @@ Phar::mapPhar('php-optimize.phar');
 require 'phar://php-optimize.phar/bin/php-optimize';
 __HALT_COMPILER(); ?>
 EOF;
+
         return $stub;
     }
 }
