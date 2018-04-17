@@ -79,16 +79,12 @@ class ConstantToValueCommand extends Command
                 $stmts = $parser->parse($code);
                 $traverser->traverse($stmts);
 
-                var_dump($file->getPathName());
-                var_dump($constantsVisitor->getConstants());
             } catch (Error $e) {
                 echo 'Parse Error: ', $e->getMessage();
             }
         }
 
         $constants = $constantsVisitor->getConstants();
-
-        var_dump($constants);
 
         $convertor = new ConverterVisitor(new ConstToValueConverter($constants));
         $traverser->addVisitor($convertor);
