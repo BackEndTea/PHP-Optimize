@@ -9,6 +9,9 @@
             "email": "gertp93@gmail.com"
         }
     ],
+    "bin": [
+        "php-optimize"
+    ],
     "require": {
         "php": "^7.1",
         "nikic/php-parser": "^4.0",

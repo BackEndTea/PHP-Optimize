@@ -188,7 +188,7 @@ class Compiler
 Phar::mapPhar();
 EOF;
         return $stub . <<<'EOF'
-require 'phar://php-optimizer.phar/bin/php-optimizer';
+require 'phar://php-optimize.phar/bin/php-optimize';
 __HALT_COMPILER();
 EOF;
     }
