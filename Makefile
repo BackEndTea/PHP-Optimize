@@ -49,5 +49,5 @@ validate:
 	composer validate --strict
 
 phar:
-    chmod a+x bin/compile
-    ./bin/compile
+	chmod a+x bin/compile
+	./bin/compile
