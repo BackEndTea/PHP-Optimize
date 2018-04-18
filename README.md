@@ -37,5 +37,5 @@ $ ./bin/php-optimize php-optimize:constant:tovalue src build
 ### Compile to .phar
 
 ```shell
-$ ./bin/compile 
+$ make phar 
 ```
