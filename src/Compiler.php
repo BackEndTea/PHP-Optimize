@@ -29,8 +29,6 @@ class Compiler
 
     public function compile(string $filename = 'php-optimize.phar'): void
     {
-        // TODO figure out what php compatibility should be, now it's 7+ due to typehint
-
         if (\file_exists($filename)) {
             \unlink($filename);
         }
