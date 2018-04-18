@@ -33,6 +33,7 @@ $ ./bin/php-optimize php-optimize:run src build
 
 # Convert constants
 $ ./bin/php-optimize php-optimize:constant:tovalue src build
+```
 
 ### Compile to .phar
 
