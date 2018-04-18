@@ -26,8 +26,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class ConstantToValue.
- *
  * @author Loek van der Linde <lind0077@hz.nl>
  */
 class ConstantToValueCommand extends Command
