@@ -17,15 +17,15 @@ use PHPUnit\Framework\TestCase;
 
 final class CompilerTest extends TestCase
 {
-    public function test_it_creates_phar()
+    public function test_it_creates_phar(): void
     {
         $filename = '/tmp/test-phar.phar';
 
         $compiler = new Compiler();
         $compiler->compile($filename);
 
-        $this->assertTrue(file_exists($filename));
+        $this->assertFileExists($filename);
 
-        unlink($filename);
+        \unlink($filename);
     }
 }
