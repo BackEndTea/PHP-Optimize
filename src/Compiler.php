@@ -109,7 +109,7 @@ class Compiler
      * @param \SplFileInfo $file
      * @param bool         $strip
      */
-    private function addFile($phar, $file, $strip = true): void
+    private function addFile(\Phar $phar, \SplFileInfo $file, bool $strip = true): void
     {
         $path = $this->getRelativeFilePath($file);
         $content = \file_get_contents($file->getPathname());
@@ -128,7 +128,7 @@ class Compiler
      *
      * @return string
      */
-    private function getRelativeFilePath($file)
+    private function getRelativeFilePath(\SplFileInfo $file): string
     {
         $realPath = $file->getRealPath();
         $pathPrefix = (\dirname(__DIR__)) . DIRECTORY_SEPARATOR;
@@ -145,7 +145,7 @@ class Compiler
      *
      * @return string
      */
-    private function stripWhitespace($source)
+    private function stripWhitespace(string $source): string
     {
         if (! \function_exists('token_get_all')) {
             return $source;
@@ -177,7 +177,7 @@ class Compiler
      *
      * @param \Phar $phar
      */
-    private function addBinExecutable($phar): void
+    private function addBinExecutable(\Phar $phar): void
     {
         $content = \file_get_contents(__DIR__ . '/../bin/php-optimize');
         $content = \preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
@@ -189,7 +189,7 @@ class Compiler
      *
      * @return string
      */
-    private function getStub()
+    private function getStub(): string
     {
         $stub = <<<'EOF'
 #!/usr/bin/env php
