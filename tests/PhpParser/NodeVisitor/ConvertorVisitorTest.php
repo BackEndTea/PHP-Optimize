@@ -51,12 +51,12 @@ final class ConvertorVisitorTest extends TestCase
         $parser = (new ParserFactory())->create(ParserFactory::PREFER_PHP7, $lexer);
 
         yield 'It converts the use of a fully classified const' => [
-            ['Baz' => new Node\Scalar\String_('A value')],
+            ['Foo\Bar\Baz' => new Node\Scalar\String_('A value')],
             $parser->parse(
                 <<<'PHP'
 <?php
 
-return self::Baz;
+return Foo\Bar::Baz;
 PHP
             ),
         <<<'PHP'
