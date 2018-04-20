@@ -48,6 +48,6 @@ cs-check: vendor $(PHP-CS-FIXER)
 validate:
 	composer validate --strict
 
-phar:
-	chmod a+x bin/compile
+phar: vendor
 	./bin/compile
+	chmod a+x php-optimize.phar

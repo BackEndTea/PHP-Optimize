@@ -22,12 +22,13 @@ use Symfony\Component\Finder\Finder;
  */
 class Compiler
 {
+    const DEFAULT_PHAR_NAME = 'php-optimize.phar';
     /**
      * @var string
      */
     private $versionDate;
 
-    public function compile(string $filename = 'php-optimize.phar'): void
+    public function compile(string $filename = self::DEFAULT_PHAR_NAME): void
     {
         if (\file_exists($filename)) {
             \unlink($filename);
