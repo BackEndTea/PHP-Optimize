@@ -19,3 +19,24 @@ with its actual value, to gain a microscopic preformace boost.
 
 This package should not be ran on your normal code, as it may change code style, however it can be ran as part of
 the creation of a phar, to increase performance.
+
+## Usage
+
+### Use commands
+
+```shell
+# Lists all commands
+$ ./bin/php-optimize
+
+# Runs all available commands
+$ ./bin/php-optimize php-optimize:run src build
+
+# Convert constants
+$ ./bin/php-optimize php-optimize:constant:tovalue src build
+```
+
+### Compile to .phar
+
+```shell
+$ make phar 
+```
