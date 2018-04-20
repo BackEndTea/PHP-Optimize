@@ -20,9 +20,10 @@ use Symfony\Component\Finder\Finder;
  *
  * @author Loek van der Linde <lind0077@hz.nl>
  */
-class Compiler
+final class Compiler
 {
-    const DEFAULT_PHAR_NAME = 'php-optimize.phar';
+    public const DEFAULT_PHAR_NAME = 'php-optimize.phar';
+
     /**
      * @var string
      */
@@ -101,13 +102,6 @@ class Compiler
         $util->save($filename, \Phar::SHA1);
     }
 
-    /**
-     * Adds a file to the PHAR passed. Can also remove whitespace from passed source files.
-     *
-     * @param \Phar        $phar
-     * @param \SplFileInfo $file
-     * @param bool         $strip
-     */
     private function addFile(\Phar $phar, \SplFileInfo $file, bool $strip = true): void
     {
         $path = $this->getRelativeFilePath($file);
@@ -120,13 +114,6 @@ class Compiler
         $phar->addFromString($path, $content);
     }
 
-    /**
-     * Get file path relative to cwd.
-     *
-     * @param \SplFileInfo $file
-     *
-     * @return string
-     */
     private function getRelativeFilePath(\SplFileInfo $file): string
     {
         $realPath = $file->getRealPath();
@@ -137,13 +124,6 @@ class Compiler
         return \strtr($relativePath, '\\', '/');
     }
 
-    /**
-     * Removes whitespace from PHP source, while preserving line numbers.
-     *
-     * @param string $source
-     *
-     * @return string
-     */
     private function stripWhitespace(string $source): string
     {
         if (! \function_exists('token_get_all')) {
@@ -171,11 +151,6 @@ class Compiler
         return $output;
     }
 
-    /**
-     * Adds the php-optimizer executable from the bin/ folder.
-     *
-     * @param \Phar $phar
-     */
     private function addBinExecutable(\Phar $phar): void
     {
         $content = \file_get_contents(__DIR__ . '/../bin/php-optimize');

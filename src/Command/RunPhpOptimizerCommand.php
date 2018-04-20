@@ -23,11 +23,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  *
  * @author Loek van der Linde <lind0077@hz.nl>
  */
-class RunPhpOptimizerCommand extends Command
+final class RunPhpOptimizerCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -46,19 +43,12 @@ class RunPhpOptimizerCommand extends Command
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         // TODO Now we hard-code commands. Auto discovery would be nice
         $this->runConstantToValueCommand($input, $output);
     }
 
-    /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     */
     protected function runConstantToValueCommand(InputInterface $input, OutputInterface $output): void
     {
         $command = $this->getApplication()->find('php-optimize:constant:tovalue');

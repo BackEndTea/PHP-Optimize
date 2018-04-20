@@ -28,11 +28,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * @author Loek van der Linde <lind0077@hz.nl>
  */
-class ConstantToValueCommand extends Command
+final class ConstantToValueCommand extends Command
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function configure(): void
     {
         $this
@@ -51,9 +48,6 @@ class ConstantToValueCommand extends Command
         ;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $directoryToScan = \getcwd() . '/' . $input->getArgument('source_folder');

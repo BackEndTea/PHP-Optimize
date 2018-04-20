@@ -19,7 +19,7 @@ final class CompilerTest extends TestCase
 {
     public function test_it_creates_phar(): void
     {
-        $filename = '/tmp/test-phar.phar';
+        $filename = \sys_get_temp_dir() . '/test-phar.phar';
 
         $compiler = new Compiler();
         $compiler->compile($filename);
