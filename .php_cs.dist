@@ -13,6 +13,7 @@ $finder = \PhpCsFixer\Finder::create()
     ->in('src')
     ->in('tests')
     ->exclude('Fixtures')
+    ->in('features')
 ;
 return \PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
