@@ -12,7 +12,7 @@ infection.phar.pubkey
 phpstan.phar
 php-cs-fixer-v2.phar
 
-/php-optimize.phar
+php-optimize.phar
 
 #Local stuff
 .php_cs.cache

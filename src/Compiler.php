@@ -22,7 +22,7 @@ use Symfony\Component\Finder\Finder;
  */
 final class Compiler
 {
-    public const DEFAULT_PHAR_NAME = 'php-optimize.phar';
+    public const DEFAULT_PHAR_NAME = 'build/php-optimize.phar';
 
     /**
      * @var string

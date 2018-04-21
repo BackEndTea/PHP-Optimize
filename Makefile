@@ -25,14 +25,17 @@ vendor: composer.json composer.lock
 	chmod a+x ./infection.phar
 
 
-.PHONY: test-unit test-infection
-test: test-unit test-infection
+.PHONY: test-unit test-infection test-behat
+test: test-unit test-infection test-behat
 
 test-unit: vendor
 	vendor/bin/phpunit
 
 test-infection: $(INFECTION)
 	$(INFECTION) $(INFECTION_FLAGS)
+
+test-behat: vendor
+	vendor/bin/behat
 
 analyze: validate phpstan cs-check
 

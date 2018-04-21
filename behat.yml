@@ -1,0 +1,5 @@
+default:
+  suites:
+    phar_features:
+      paths:    [ '%paths.base%/features/phar' ]
+      contexts: [ 'PharContext' ]
